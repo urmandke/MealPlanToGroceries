@@ -19,6 +19,13 @@ ingredientRouter.route('/')
     .catch((err) => next(err)); 
 })
 
+.head((req,res,next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/js');
+        res.end();
+        (err) => next(err)
+})
+
 .post((req,res,next) => {
     Ingredients.create(req.body)
     .then((ingredient) => {
@@ -44,14 +51,22 @@ ingredientRouter.route('/')
         res.json(resp);
     }, (err) => next(err))
     .catch((err) => next(err));
+})
+
+.options((req,res,next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/js');
+        res.setHeader('Allow','GET, HEAD, OPTIONS, POST, DELETE');
+        res.end();
+        (err) => next(err)
 });
 
 //endpoints for dishId
 ingredientRouter.route('/:ingredientId')
 .get((req,res,next) => {
-    Dishes.findById(req.params.ingredientId)
+    Ingredients.findById(req.params.ingredientId)
     .then((ingredient) => {
-        console.log("Ingredient found",ingredientId);
+        console.log("Ingredient is found");
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
         res.json(ingredient);
@@ -59,12 +74,27 @@ ingredientRouter.route('/:ingredientId')
     .catch((err) => next(err)); 
 })
 
+.options((req,res,next) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/js');
+    res.setHeader('Allow','GET, HEAD, OPTIONS, POST, DELETE, TRACE');
+    res.end();
+    (err) => next(err)
+})
+
+.head((req,res,next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/js');
+        res.end();
+        (err) => next(err)
+})
+
 .post((req,res,next) => {
-    res.end('Post operation not supported on dishes/' + req.params.dishId);   
+    res.end('Post operation not supported on ingredients/' + req.params.ingredientId);   
 })
 
 .put((req,res,next) => {
-    Ingredients.findByIdAndUpdate(req.params.dishId, {
+    Ingredients.findByIdAndUpdate(req.params.ingredientId, {
         $set: req.body
     }, { new: true})
     .then((ingredient) => {
@@ -76,13 +106,24 @@ ingredientRouter.route('/:ingredientId')
 })
 
 .delete((req,res,next) => {
-    Ingredients.findByIdAndRemove(req.params.dishId)
+    Ingredients.findByIdAndRemove(req.params.ingredientId)
     .then((resp) =>{
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
-        res.json(resp);
+        res.end("Ingredient with ID:" + req.params.ingredientId + " deleted");
     }, (err) => next(err))
     .catch((err) => next(err)); 
-}); 
+})
+
+.trace((req,res,next) => {
+    Ingredients.findById(req.params.ingredientId)
+    .then((ingredient) => {
+        console.log("Ingredient is found");
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/js');
+        res.send("Ingredient is avaliable in the database");
+    }, (err) => next(err))
+    .catch((err) => next(err)); 
+});
 
 module.exports = ingredientRouter;

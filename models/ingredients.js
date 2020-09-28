@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 require('mongoose-currency').loadType(mongoose);
@@ -10,7 +11,7 @@ const ingredientSchema = new Schema({
         unique: true
     },
     servingSize:{
-        type: Number,
+        type: Number, //in grams - standard serving size is 100g
         require: true
     },
     protein:{
@@ -30,7 +31,6 @@ const ingredientSchema = new Schema({
     },
     price:{
         type: Currency,
-        required: true,
         min: 0
     }
 },{
