@@ -74,13 +74,19 @@ ingredientRouter.route('/:ingredientId')
     .catch((err) => next(err)); 
 })
 
+.options((req,res,next) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/js');
+    res.setHeader('Allow','GET, HEAD, OPTIONS, POST, DELETE');
+    res.end();
+    (err) => next(err)
+})
+
 .head((req,res,next) => {
-    Ingredients.findById(req.params.ingredientId)
-    .then(() => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
-    }, (err) => next(err))
-    .catch((err) => next(err)); 
+        res.end();
+        (err) => next(err)
 })
 
 .post((req,res,next) => {
@@ -107,6 +113,17 @@ ingredientRouter.route('/:ingredientId')
         res.end("Ingredient with ID:" + req.params.ingredientId + " deleted");
     }, (err) => next(err))
     .catch((err) => next(err)); 
-}); 
+})
+
+.trace((req,res,next) => {
+    Ingredients.findById(req.params.ingredientId)
+    .then((ingredient) => {
+        console.log("Ingredient is found");
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/js');
+        res.send("Ingredient is avaliable in the database");
+    }, (err) => next(err))
+    .catch((err) => next(err)); 
+});
 
 module.exports = ingredientRouter;
