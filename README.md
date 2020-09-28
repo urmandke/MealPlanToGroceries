@@ -1,5 +1,12 @@
 # MealPlanToGroceries
-An application that converts your meal plan to a list of Grocies to purchase at Walmart.
+An application that converts your meal plan to a list of Grocies to purchase at Walmart. In the final form it will have the following features(still work in progress):
+
+1. User login and authentication
+2. Ability for users to create recipies
+3. Ability for user to create ingredients
+4. Ability for users to create meal plans for current week
+5. Backend logic to calculate the most efficient basket of the walmart store from the given meal plan.
+
 
 ## Dependencies
 
