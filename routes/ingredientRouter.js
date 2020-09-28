@@ -8,6 +8,7 @@ const ingredientRouter = express.Router();
 
 ingredientRouter.use(bodyParser.json());
 
+//Router to handle request //localhost:port/
 ingredientRouter.route('/')
 .get((req,res,next) => {
     Ingredients.find({})
@@ -61,7 +62,7 @@ ingredientRouter.route('/')
         (err) => next(err)
 });
 
-//endpoints for ingredientId
+//Router to handle request //localhost:port/:ingredientId
 ingredientRouter.route('/:ingredientId')
 .get((req,res,next) => {
     Ingredients.findById(req.params.ingredientId)
