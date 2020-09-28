@@ -12,7 +12,8 @@ const ingredientSchema = new Schema({
     },
     servingSize:{
         type: Number, //in grams - standard serving size is 100g
-        require: true
+        require: true,
+        default: 100
     },
     protein:{
         type: Number,
