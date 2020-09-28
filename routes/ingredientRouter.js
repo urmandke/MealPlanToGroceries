@@ -77,7 +77,7 @@ ingredientRouter.route('/:ingredientId')
 .options((req,res,next) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/js');
-    res.setHeader('Allow','GET, HEAD, OPTIONS, POST, DELETE');
+    res.setHeader('Allow','GET, HEAD, OPTIONS, POST, DELETE, TRACE');
     res.end();
     (err) => next(err)
 })
