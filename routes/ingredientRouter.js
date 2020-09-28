@@ -61,7 +61,7 @@ ingredientRouter.route('/')
         (err) => next(err)
 });
 
-//endpoints for dishId
+//endpoints for ingredientId
 ingredientRouter.route('/:ingredientId')
 .get((req,res,next) => {
     Ingredients.findById(req.params.ingredientId)
