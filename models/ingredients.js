@@ -13,17 +13,20 @@ const ingredientSchema = new Schema({
         type: Number,
         require: true
     },
-    Protein:{
+    protein:{
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
-    Carbs:{
+    carbs:{
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
-    Fats:{
+    fats:{
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     price:{
         type: Currency,

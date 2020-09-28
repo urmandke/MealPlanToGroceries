@@ -2,41 +2,42 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Dishes = require('../models/dishes');
+const Ingredients = require('../models/ingredients');
 
-const dishRouter = express.Router();
+const ingredientRouter = express.Router();
 
-dishRouter.use(bodyParser.json());
+ingredientRouter.use(bodyParser.json());
 
-dishRouter.route('/')
+ingredientRouter.route('/')
 .get((req,res,next) => {
-    Dishes.find({})
-    .then((dishes) => {
+    Ingredients.find({})
+    .then((ingredients) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
-        res.json(dishes);
+        res.json(ingredients);
     }, (err) => next(err))
     .catch((err) => next(err)); 
 })
 
 .post((req,res,next) => {
-    Dishes.create(req.body)
-    .then((dish) => {
-        console.log("Dish Created",dish);
+    Ingredients.create(req.body)
+    .then((ingredient) => {
+        console.log("Ingredient Created",ingredient);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
-        res.json(dishes);
+        res.json(ingredient);
     }, (err) => next(err))
     .catch((err) => next(err));  
 })
 
 .put((req,res,next) => {
     res.statusCode = 403;
-    res.end('Put operation not supported on dishes');   
+    res.end('Put operation not supported on ingredients');   
 })
 
+//delete operation should be allowed only for admins
 .delete((req,res,next) => {
-    Dishes.remove({})
+    Ingredients.remove({})
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
@@ -46,14 +47,14 @@ dishRouter.route('/')
 });
 
 //endpoints for dishId
-dishRouter.route('/:dishId')
+ingredientRouter.route('/:ingredientId')
 .get((req,res,next) => {
-    Dishes.findById(req.params.dishId)
-    .then((dish) => {
-        console.log("Dish Created",dish);
+    Dishes.findById(req.params.ingredientId)
+    .then((ingredient) => {
+        console.log("Ingredient found",ingredientId);
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
-        res.json(dishes);
+        res.json(ingredient);
     }, (err) => next(err))
     .catch((err) => next(err)); 
 })
@@ -63,19 +64,19 @@ dishRouter.route('/:dishId')
 })
 
 .put((req,res,next) => {
-    Dishes.findByIdAndUpdate(req.params.dishId, {
+    Ingredients.findByIdAndUpdate(req.params.dishId, {
         $set: req.body
     }, { new: true})
-    .then((dish) => {
+    .then((ingredient) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
-        res.json(dishes);
+        res.json(ingredient);
     }, (err) => next(err))
     .catch((err) => next(err));   
 })
 
 .delete((req,res,next) => {
-    Dishes.findByIdAndRemove(dish.params.dishId)
+    Ingredients.findByIdAndRemove(req.params.dishId)
     .then((resp) =>{
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/js');
@@ -84,111 +85,4 @@ dishRouter.route('/:dishId')
     .catch((err) => next(err)); 
 }); 
 
-// Routes for comments
-dishRouter.route('/:dishId/comments')
-.get((req,res,next) => {
-    Dishes.findById(req.params.dishId)
-    .then((dish) => {
-        if (dish != null){
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/js');
-            res.json(dish.comments);
-        }
-        else{
-            err = new Error('Dish '+ req.params.dishId + " not found");
-            err.status = 404;
-            return next(err);
-        }
-    }, (err) => next(err))
-    .catch((err) => next(err)); 
-})
-
-.post((req,res,next) => {
-    Dishes.findById(req.params.dishId)
-    .then((dish) => {
-        if (dish != null){
-            dish.comments.push(req.body);
-            dish.save()
-            .then((dish) =>{
-                res.StatusCode = 200;
-                res.setHeader('Content-Type', 'application/js')
-                res.json(dish);
-            })
-        }
-        else{
-            err = new Error('Dish '+ req.params.dishId + " not found");
-            err.status = 404;
-            return next(err);
-        };
-    }, (err) => next(err))
-    .catch((err) => next(err));  
-})
-
-.put((req,res,next) => {
-    res.statusCode = 403;
-    res.end('Put operation not supported on /dishes/' + req.params.dishId +'/comments');   
-})
-
-.delete((req,res,next) => {
-    Dishes.findById(req.params.dishId)
-    .then((dish) => {
-        if (dish != null){
-            for(let i = (dish.comment.length - 1);i>=0; i--){
-                dish.comments.id(dish.comments[i]._id.remove)
-            }
-            dish.save()
-            .then((dish) =>{
-                res.StatusCode = 200;
-                res.setHeader('Content-Type', 'application/js')
-                res.json(dish);
-            }, (err) => next(err))
-        }
-        else{
-            err = new Error('Dish '+ req.params.dishId + " not found");
-            err.status = 404;
-            return next(err);
-        };
-    }, (err) => next(err))
-    .catch((err) => next(err));
-});
-
-//endpoints for dishId
-dishRouter.route('/:dishId/comments/:commentID')
-.get((req,res,next) => {
-    Dishes.findById(req.params.dishId)
-    .then((dish) => {
-        console.log("Dish Created",dish);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/js');
-        res.json(dishes);
-    }, (err) => next(err))
-    .catch((err) => next(err)); 
-})
-
-.post((req,res,next) => {
-    res.end('Post operation not supported on dishes/' + req.params.dishId);   
-})
-
-.put((req,res,next) => {
-    Dishes.findByIdAndUpdate(req.params.dishId, {
-        $set: req.body
-    }, { new: true})
-    .then((dish) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/js');
-        res.json(dishes);
-    }, (err) => next(err))
-    .catch((err) => next(err));   
-})
-
-.delete((req,res,next) => {
-    Dishes.findByIdAndRemove(dish.params.dishId)
-    .then((resp) =>{
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/js');
-        res.json(resp);
-    }, (err) => next(err))
-    .catch((err) => next(err)); 
-});
-
-module.exports = dishRouter;
+module.exports = ingredientRouter;
