@@ -26,6 +26,13 @@ In-order to start the http-server:
 ```
 npm start
 ```
+and make requests to address:
+
+```
+ http://localhost:3000/
+```
+3000 is the default port. The app is designed to read environment variable for PORT
+
 ## Build
 Please use the follow to build the application:
 ```
