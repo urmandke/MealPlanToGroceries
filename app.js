@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -6,7 +7,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const ingredientsRouter = require('./routes/ingredient');
+const ingredientsRouter = require('./routes/ingredientRouter');
 
 const mongoose = require('mongoose')
 
