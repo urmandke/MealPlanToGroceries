@@ -55,7 +55,6 @@ A model of ingredients is created and Routes to perform the following HTTP reque
     
     
     *HEAD*
-   
     Similar to GET but returns the header only as response.
     
     
