@@ -28,3 +28,7 @@ exports.jwtPassport= passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
         else if(user) { 
             return done(null, user);
         }
+    })
+}));
+
+exports.verifyUser = passport.authenticate('jwt',{session: false});
