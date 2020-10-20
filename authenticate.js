@@ -6,8 +6,10 @@ var ExtractJwt = require('passport-jwt').ExtractJwt;
 var jwt = require('jsonwebtoken');
 
 var config = require('./config');
+const user = require('./models/user');
 
 exports.local = passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -32,5 +34,6 @@ exports.jwtPassport = passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
         }
     })
 }));
+
 
 exports.verifyUser = passport.authenticate('jwt',{session: false});

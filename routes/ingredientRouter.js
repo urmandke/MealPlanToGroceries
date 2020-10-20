@@ -90,11 +90,11 @@ ingredientRouter.route('/:ingredientId')
         (err) => next(err)
 })
 
-.post((req,res,next) => {
+.post(authenticate.verifyUser,(req,res,next) => {
     res.end('Post operation not supported on ingredients/' + req.params.ingredientId);   
 })
 
-.put((req,res,next) => {
+.put(authenticate.verifyUser,(req,res,next) => {
     Ingredients.findByIdAndUpdate(req.params.ingredientId, {
         $set: req.body
     }, { new: true})
@@ -106,7 +106,7 @@ ingredientRouter.route('/:ingredientId')
     .catch((err) => next(err));   
 })
 
-.delete((req,res,next) => {
+.delete(authenticate.verifyUserAdmin,(req,res,next) => {
     Ingredients.findByIdAndRemove(req.params.ingredientId)
     .then((resp) =>{
         res.statusCode = 200;
