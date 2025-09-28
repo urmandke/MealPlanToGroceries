@@ -1,123 +1,127 @@
 # MealPlanToGroceries
-An application that converts your meal plan to a list of Grocies to purchase at Walmart. In the final form it will have the following features(still work in progress):
+
+This project is a MERN (MongoDB, Express, React, Node.js) application built with TypeScript that converts your meal plan into a list of groceries to purchase at Walmart. The application is structured into two main parts: the backend and the frontend.
+
+## Project Structure
+
+```
+MealPlanToGroceries
+├── backend
+│   ├── src
+│   │   ├── app.ts
+│   │   ├── controllers
+│   │   │   └── ingredientController.ts
+│   │   ├── models
+│   │   │   └── ingredientModel.ts
+│   │   ├── routes
+│   │   │   └── ingredientRoutes.ts
+│   │   ├── services
+│   │   │   └── ingredientService.ts
+│   │   └── types
+│   │       └── index.ts
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── README.md
+├── frontend
+│   ├── src
+│   │   ├── App.tsx
+│   │   ├── components
+│   │   │   └── IngredientList.tsx
+│   │   ├── pages
+│   │   │   └── HomePage.tsx
+│   │   ├── services
+│   │   │   └── apiService.ts
+│   │   └── types
+│   │       └── index.ts
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── README.md
+├── .gitignore
+└── README.md
+```
+
+## Features
 
 1. User login and authentication
-2. Ability for users to create recipies
-3. Ability for user to create ingredients
-4. Ability for users to create meal plans for current week
-5. Backend logic to calculate the most efficient basket of the walmart store from the given meal plan.
-
+2. Ability for users to create recipes
+3. Ability for users to create ingredients
+4. Ability for users to create meal plans for the current week
+5. Backend logic to calculate the most efficient basket of the Walmart store from the given meal plan
 
 ## Dependencies
 
-1. MongoDB: Mongodb should be installed on your machine and mongod service should be running. Please refer to (for MongoDB community version):
-https://docs.mongodb.com/manual/administration/install-community/
+### Backend
 
-2. Node: node libraries should be installed. Please refer to:
-https://nodejs.org/en/
+- MongoDB: Ensure MongoDB is installed and the `mongod` service is running. Refer to the MongoDB community version documentation for installation instructions: https://docs.mongodb.com/manual/administration/install-community/
+- Node.js: Install Node.js from the official website: https://nodejs.org/en/
+- TypeScript: The backend is built using TypeScript, so ensure you have TypeScript installed.
 
-3. npm: npm package manage manager will with installed with node 
+### Frontend
 
+- React: The frontend is built using React and TypeScript. Ensure you have the necessary dependencies installed.
 
-## Install
+## Installation
 
-use npm install to install node dependacies:
+To install the backend dependencies, navigate to the `backend` directory and run:
 
 ```
 npm install
 ```
 
-## Run
-In-order to start the http-server:
+To install the frontend dependencies, navigate to the `frontend` directory and run:
+
+```
+npm install
+```
+
+## Running the Application
+
+### Backend
+
+To start the backend server, navigate to the `backend` directory and run:
 
 ```
 npm start
 ```
-and make requests to address:
+
+The backend server will be available at:
 
 ```
- http://localhost:3000/
+http://localhost:3000/
 ```
-3000 is the default port. The app is designed to read environment variable for PORT
 
-## Build
-Please use the follow to build the application:
+### Frontend
+
+To start the frontend application, navigate to the `frontend` directory and run:
+
 ```
-npm build
+npm start
+```
+
+The frontend application will be available at:
+
+```
+http://localhost:3001/
+```
+
+## Building the Application
+
+To build the backend application, navigate to the `backend` directory and run:
+
+```
+npm run build
+```
+
+To build the frontend application, navigate to the `frontend` directory and run:
+
+```
+npm run build
 ```
 
 ## Current Status
-A model of ingredients is created and Routes to perform the following HTTP requests are defined:
 
-### Endpoint: //localhost:3000/ingredients ###
-    *GET*   
-    Returns a list of all ingredients added to server (in json) in the body of the response
-    
-    
-    *HEAD*
-   
-    Similar to GET but returns the header only as response.
-    
-    
-    *POST*   
-    Requires a json object in the body in the form of:
+The backend has a model for ingredients and routes to perform various HTTP requests related to ingredients. The frontend is set up to display and manage ingredients through a user-friendly interface.
 
-    {}
-      "name": "Test_Ingredient2",
-      "servingSize": 100,
-      "protein": 25,
-      "date": "2011-12-02T17:57:28.556094Z"
-    }
+## Contribution
 
-    *OPTIONS*   
-    Returns the methods supported at the end-point in the header of the response (Allow header)
-
-    *PUT*
-
-    PUT method is not supported at this end point. If request will return a response with the same information in the body.
-
-    *DELETE*
-
-    DELETES method deletes all documents in the ingredients collection.
-
-
-    
-### Endpoint: //localhost:3000/ingredients/:ingredientId ###
-
-
-    Supported Methods:
-
-    *GET*   
-    Returns a json object of the ingredient correponding to the ingredientId in the route.
-    
-    
-    *HEAD*
-   
-    Similar to GET but returns the header only as response.
-    
-    
-    *POST*   
-    PUT method is not supported at this end point. If request will return a response with the same information in the body.
-    
-    *OPTIONS*   
-    Returns the methods supported at the end-point in the header of the response (Allow header)
-
-    *PUT*
-
-    Updates the ingredient corresponding to the *ingredientId* in the route. Expects the body of the request to contain a json object like so:
-    
-    {
-      "name": "Test_Ingredient2",
-      "servingSize": 100,
-      "protein": 25,
-      "date": "2011-12-02T17:57:28.556094Z"
-    }
-
-
-    *DELETE*
-
-    DELETES method deletes all documents in the ingredients collection.
-
-    *TRACE*
-
-    Returns a response that the object with the ID(provided in the route) exsist on the server if true. Else returns error.
+Contributions are welcome! Please feel free to submit issues or pull requests.
